@@ -50,7 +50,7 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 1. **Run the bot:**
 
     ```sh
-    python bot.py
+    python main.py
     ```
 
 2. **Interact with the bot on Telegram:**
