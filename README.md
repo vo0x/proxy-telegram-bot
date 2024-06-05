@@ -20,6 +20,7 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 
     ```sh
     pip install pyrogram
+    pip install tgcrypto
     ```
 
 3. **Configure your bot:**
