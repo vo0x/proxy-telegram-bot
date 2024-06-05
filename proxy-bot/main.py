@@ -1,40 +1,46 @@
-import asyncio.staggered
+import asyncio
 from pyrogram import Client, filters, idle
 from proxys import proxys
-import asyncio
 import random
-#join us on telegram https://t.me/NS8_b
-# setup the bot
+
+# Join us on Telegram: https://t.me/NS8_b
+
+# Setup the bot
 api_id = int('your api_id')
 api_hash = 'your api_hash'
 bot_token = 'your bot_token'
+
 app = Client(
-    'proxy bot',
-    api_id = api_id,
-    api_hash = api_hash,
-    bot_token = bot_token
+    'proxy_bot',
+    api_id=api_id,
+    api_hash=api_hash,
+    bot_token=bot_token
 )
-# start 
+
+# Start command
 @app.on_message(filters.command('start'))
 async def start(_, message):
-    await app.send_message(message.chat.id, 'welcome to the proxy bot')
-# command
+    await message.reply("Welcome to the proxy bot")
+
+# Get proxy command
 @app.on_message(filters.command('getproxy'))
 async def proxy(_, message):
     proxy = random.choice(proxys)
-    #if you paste a ready links just skip the proxy info and replace {proxy_info}with {proxy}
-    proxy_info = f'server:{proxy['server']}\nport:{proxy['port']}\nSecret:{proxy['secret']}'
-    await app.send_message(message.chat.id, f'here is you proxy:\n\n{proxy_info}')
+    # If you paste ready links, just skip the proxy info and replace {proxy_info} with {proxy}
+    proxy_info = f'server: {proxy["server"]}\nport: {proxy["port"]}\nSecret: {proxy["secret"]}'
+    await message.reply(f'Here is your proxy:\n\n{proxy_info}')
 
+# Main function to run the bot
 async def main():
     await app.start()
     await idle()
     await app.stop()
 
-if __name__ == '__name__':
+# Ensure the script is run directly
+if __name__ == "__main__":
     try:
         loop = asyncio.get_event_loop()
     except RuntimeError:
         loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop=loop)        
-    loop.run_until_complete()
+        asyncio.set_event_loop(loop)
+    loop.run_until_complete(main())
