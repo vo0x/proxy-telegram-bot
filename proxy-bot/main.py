@@ -3,6 +3,7 @@ from pyrogram import Client, filters, idle
 from proxys import proxys
 import asyncio
 import random
+#join us on telegram https://t.me/NS8_b
 # setup the bot
 api_id = int('your api_id')
 api_hash = 'your api_hash'
