@@ -12,7 +12,7 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/littleponyhh/telegram-proxy-bot.git
+    git clone https://github.com/littleponyhh/proxy-telegram-bot.git
     cd telegram-proxy-bot
     ```
 
