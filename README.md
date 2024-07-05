@@ -19,11 +19,15 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 2. **Install the required Python packages:**
 
     ```sh
-    pip install pyrogram
-    pip install tgcrypto
+   pip3 install -r requirements.txt
     ```
+    or
+   ```sh
+   pip3 install pyrogram
+   pip3 install tgcrypto
+   ```
 
-3. **Configure your bot:**
+4. **Configure your bot:**
 
     Replace `'your api_id'`, `'your api_hash'`, and `'your bot_token'` in the script with your actual Telegram API ID, API hash, and bot token.
 
@@ -33,17 +37,12 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
     bot_token = 'your bot_token'
     ```
 
-4. **Ensure your proxy list is correctly defined:**
+5. **Ensure your proxy list is correctly defined:**
 
-    Create a `proxys.py` file containing a list of proxies. Each proxy should be a dictionary with keys `server`, `port`, and `secret`.
-
-    ```python
-    proxys = [
-        {"server": "proxy1.server.com", "port": "1234", "secret": "secret1"},
-        {"server": "proxy2.server.com", "port": "5678", "secret": "secret2"}
-        # Add more proxies as needed
-    ]
-    ```
+    just add your proxys to proxys list in the main.py file
+   ```python
+   proxys = ['proxy_1', ....]
+   ```
 
 ## Usage
 
@@ -56,7 +55,7 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 2. **Interact with the bot on Telegram:**
 
     - Send `/start` to receive a welcome message.
-    - Send `/getproxy` to receive a random proxy from the predefined list.
+    
 
 ## License
 
