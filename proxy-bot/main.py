@@ -1,6 +1,6 @@
 import asyncio
 from pyrogram import Client, filters, idle
-from proxys import proxys
+from pyrogram.types import ReplyKeyboardMarkup, KeyboardButton
 import random
 
 # Join us on Telegram: https://t.me/NS8_b
@@ -16,19 +16,44 @@ app = Client(
     api_hash=api_hash,
     bot_token=bot_token
 )
-
+#keyboard
+keyboard = [
+    [KeyboardButton("proxy 1")],
+    [KeyboardButton("proxy 2")],
+    [KeyboardButton("proxy 3")],
+    [KeyboardButton("proxy 4")],
+    [KeyboardButton("proxy 5")],
+]
+# put the your proxy in this list
+proxys = []
 # Start command
-@app.on_message(filters.command('start'))
+@app.on_message(filters.command('start')& filters.private)
 async def start(_, message):
-    await message.reply("Welcome to the proxy bot")
+    reply_markp = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    await message.reply("""
+    **Welcome to the proxy bot**
 
-# Get proxy command
-@app.on_message(filters.command('getproxy'))
-async def proxy(_, message):
+    here you can get free tgproxys 
+
+    dev : @NS8_b
+    """,reply_markup = reply_markup)
+# proxy handler
+@app.on_message(filters.text& filters.private)
+async def proxy_handler(_, message):
+    chat_id = message.chat.id
     proxy = random.choice(proxys)
-    # If you paste ready links, just skip the proxy info and replace {proxy_info} with {proxy}
-    proxy_info = f'server: {proxy["server"]}\nport: {proxy["port"]}\nSecret: {proxy["secret"]}'
-    await message.reply(f'Here is your proxy:\n\n{proxy_info}')
+    if message.text == 'proxy 1':
+        await app.send_message(chat_id, proxy)
+    if message.text == 'proxy 2':
+        await app.send_message(chat_id, proxy)
+    if message.text == 'proxy 3':
+        await app.send_message(chat_id, proxy)
+    if message.text == 'proxy 4':
+        await app.send_message(chat_id, proxy)
+    if message.text == 'proxy 5':
+        await app.send_message(chat_id, proxy)
+    
+
 
 # Main function to run the bot
 async def main():
