@@ -1,71 +1,90 @@
-import asyncio
-from pyrogram import Client, filters, idle
-from pyrogram.types import ReplyKeyboardMarkup, KeyboardButton
+import pyrogram
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import Message, CallbackQuery
 import random
-
-# Join us on Telegram: https://t.me/NS8_b
-
-# Setup the bot
-api_id = int('your api_id')
-api_hash = 'your api_hash'
-bot_token = 'your bot_token'
-
+import asyncio
+# setup the bot
+api_id = int('api id')
+api_hash = 'api_hashf'
+bot_token = 'bot_token'
 app = Client(
-    'proxy_bot',
-    api_id=api_id,
-    api_hash=api_hash,
-    bot_token=bot_token
+    'proxy-bot',
+    api_id= api_id,
+    api_hash= api_hash,
+    bot_token=bottoken
 )
-#keyboard
-keyboard = [
-    [KeyboardButton("proxy 1")],
-    [KeyboardButton("proxy 2")],
-    [KeyboardButton("proxy 3")],
-    [KeyboardButton("proxy 4")],
-    [KeyboardButton("proxy 5")],
-]
-# put the your proxy in this list
-proxys = []
-# Start command
-@app.on_message(filters.command('start')& filters.private)
-async def start(_, message):
-    reply_markp = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
-    await message.reply("""
-    **Welcome to the proxy bot**
-
-    here you can get free tgproxys 
-
-    dev : @NS8_b
-    """,reply_markup = reply_markup)
-# proxy handler
-@app.on_message(filters.text& filters.private)
-async def proxy_handler(_, message):
-    chat_id = message.chat.id
-    proxy = random.choice(proxys)
-    if message.text == 'proxy 1':
-        await app.send_message(chat_id, proxy)
-    if message.text == 'proxy 2':
-        await app.send_message(chat_id, proxy)
-    if message.text == 'proxy 3':
-        await app.send_message(chat_id, proxy)
-    if message.text == 'proxy 4':
-        await app.send_message(chat_id, proxy)
-    if message.text == 'proxy 5':
-        await app.send_message(chat_id, proxy)
-    
-
-
-# Main function to run the bot
-async def main():
-    await app.start()
-    await idle()
-    await app.stop()
-
-# Ensure the script is run directly
-if __name__ == "__main__":
+#register users
+def register_user(user_id):
+    # user_id = message.from_user.id
     try:
-        loop = asyncio.get_event_loop()
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-    loop.run_until_complete(main())
+        with open("users.txt", "r+") as file:
+            existing_ids = file.readlines()
+            if str(user_id) + "\n" not in existing_ids:
+                file.write(str(user_id) + "\n")
+                
+           
+    except FileNotFoundError:
+        with open("users.txt", "w") as file:
+            file.write(str(user_id) + "\n")
+           
+    except Exception as e:
+        print(f"Error registering user: {e}")
+# markup
+markup = {
+    'main_button' : InlineKeyboardMarkup(
+        [
+            [InlineKeyboardButton('✅الحصول على بروكسي', callback_data='get_proxy')],
+            [InlineKeyboardButton('🧑‍💻المطور', url='https://t.me/v_o0x')]
+        ]
+    ) ,
+    
+    'get_another': InlineKeyboardMarkup(
+        [
+            [InlineKeyboardButton('🔃الحصول على بروكسي اخر', callback_data='get_another')],
+            [InlineKeyboardButton('- رجوع -', callback_data = 'back')]
+        ]
+    ),
+
+    
+}
+proxys = ['write your proxys here']
+# commands 
+@app.on_message(filters.command('start')&filters.private)
+async def start(_, message: Message):
+    user_id = message.from_user.id
+    register_user(user_id)
+    start_message = '''مرحبا بك في بوت بروكسي @NS8_b✅
+     
+      هنا يمكنك على بروكسيات التليجرام بطريقة سهلة ومجانية '''
+    await message.reply(start_message, reply_markup=markup['main_button'])
+@app.on_message(filters.command('help')&filters.private)
+async def help(_, message : Message):
+    help_message = '''
+مرحبا بك في قسم المساعدة:
+
+- للحصول على بوكسي اضغط على زر الحصول على بروكسي
+
+- اذا كانت حالة البروكسي (unavailable) اضغط على زر الحصول على بروكسي اخر
+
+- للمزيد من المعلومات والبوتات نرجو منك زيارة قناتنا
+'''
+    help_markup = InlineKeyboardMarkup([[InlineKeyboardButton('قناتنا', url='https://t.me/NS1_8')]])
+    await message.reply(help_message, reply_markup = help_markup)
+
+# buttons handler 
+@app.on_callback_query()
+async def call(_, call : CallbackQuery):
+    proxy = random.choice(proxys)
+    if call.data == 'get_proxy':
+        await call.message.edit_text(f'اليك البروكسي :\n \n{proxy}', reply_markup=markup['get_another'])
+    elif call.data == 'get_another':
+        await call.message.edit_text(f'اليك البروكسي :\n \n{proxy}', reply_markup=markup['get_another'])
+    elif call.data == 'back':
+        start_message = '''مرحبا بك في بوت بروكسي @NS8_b✅
+     
+      هنا يمكنك على بروكسيات التليجرام بطريقة سهلة ومجانية '''
+        await call.message.edit_text(start_message, reply_markup=markup['main_button'])
+
+app.run()
+
