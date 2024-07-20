@@ -1,6 +1,6 @@
 # Telegram Proxy Bot
 
-A Telegram bot built using Pyrogram that provides proxy information to users.
+Telegram bot to monitor telegram proxys to users.
 
 
 
