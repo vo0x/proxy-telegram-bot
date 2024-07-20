@@ -1,19 +1,16 @@
 # Telegram Proxy Bot
 
-A Telegram bot built using Pyrogram that provides proxy information to users.
+Telegram bot to monitor telegram proxys to users.
 
-## Features
 
-- Responds to `/start` command with a welcome message.
-- Responds to `/getproxy` command by providing a random proxy from a predefined list.
 
 ## Installation
 
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/littleponyhh/proxy-telegram-bot.git
-    cd telegram-proxy-bot
+    git clone https://github.com/1ns8/proxy-telegram-bot.git
+    cd proxy-telegram-bot
     ```
 
 2. **Install the required Python packages:**
@@ -29,7 +26,7 @@ A Telegram bot built using Pyrogram that provides proxy information to users.
 
 4. **Configure your bot:**
 
-    Replace `'your api_id'`, `'your api_hash'`, and `'your bot_token'` in the script with your actual Telegram API ID, API hash, and bot token.
+    Replace `'your api_id'`, `'your api_hash'`, and `'your bot_token'` in the proxy-bot/main.py with your actual Telegram API ID, API hash, and bot token.
 
     ```python
     api_id = int('your api_id')
