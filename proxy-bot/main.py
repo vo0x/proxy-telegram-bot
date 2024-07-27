@@ -14,22 +14,7 @@ app = Client(
     api_hash= api_hash,
     bot_token=bottoken
 )
-#register users
-def register_user(user_id):
-    # user_id = message.from_user.id
-    try:
-        with open("users.txt", "r+") as file:
-            existing_ids = file.readlines()
-            if str(user_id) + "\n" not in existing_ids:
-                file.write(str(user_id) + "\n")
-                
-           
-    except FileNotFoundError:
-        with open("users.txt", "w") as file:
-            file.write(str(user_id) + "\n")
-           
-    except Exception as e:
-        print(f"Error registering user: {e}")
+
 # markup
 markup = {
     'main_button' : InlineKeyboardMarkup(
@@ -52,8 +37,8 @@ proxys = ['write your proxys here']
 # commands 
 @app.on_message(filters.command('start')&filters.private)
 async def start(_, message: Message):
-    user_id = message.from_user.id
-    register_user(user_id)
+    
+    
     start_message = '''مرحبا بك في بوت بروكسي @NS8_b✅
      
       هنا يمكنك على بروكسيات التليجرام بطريقة سهلة ومجانية '''
